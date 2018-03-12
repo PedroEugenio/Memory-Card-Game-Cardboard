@@ -30,12 +30,14 @@ public class ManagerGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(GvrPointerInputModule.CurrentRaycastResult.gameObject.tag == "Back" && GvrPointerInputModule.Pointer.TriggerDown && canFlip)
+        if (GvrPointerInputModule.CurrentRaycastResult.gameObject != null)
         {
-            addCard(GvrPointerInputModule.CurrentRaycastResult.gameObject.transform.parent.gameObject); //Gets the parent of the hitted gameobject (back)
-            Debug.Log(GvrPointerInputModule.CurrentRaycastResult.gameObject.name);
+            if (GvrPointerInputModule.CurrentRaycastResult.gameObject.tag == "Back" && GvrPointerInputModule.Pointer.TriggerDown && canFlip)
+            {
+                addCard(GvrPointerInputModule.CurrentRaycastResult.gameObject.transform.parent.gameObject); //Gets the parent of the hitted gameobject (back)
+                Debug.Log(GvrPointerInputModule.CurrentRaycastResult.gameObject.name);
+            }
         }
-        
 	}
 
     private void generateOrderArray()
