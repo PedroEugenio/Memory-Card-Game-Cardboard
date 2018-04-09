@@ -22,6 +22,10 @@ public class ManagerGame : MonoBehaviour {
 
     public bool canFlip = true;
 
+    private bool firstClick = false;
+
+    float startTime, endTime;
+    
     // Use this for initialization
     void Start () {
         generateGrid();
@@ -31,8 +35,15 @@ public class ManagerGame : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(GvrPointerInputModule.CurrentRaycastResult.gameObject != null)
-            if(GvrPointerInputModule.CurrentRaycastResult.gameObject.tag == "Back" && GvrPointerInputModule.Pointer.TriggerDown && canFlip)
+            if(GvrPointerInputModule.CurrentRaycastResult.gameObject.tag == "Back" && (GvrPointerInputModule.Pointer.TriggerDown || Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && canFlip)
             {
+                if (!firstClick)
+                {
+                    firstClick = true;
+                    startTime = Time.time;
+                    Debug.Log(startTime);
+                }
+                
                 addCard(GvrPointerInputModule.CurrentRaycastResult.gameObject.transform.parent.gameObject); //Gets the parent of the hitted gameobject (back)
                 Debug.Log(GvrPointerInputModule.CurrentRaycastResult.gameObject.name);
             }
@@ -55,7 +66,7 @@ public class ManagerGame : MonoBehaviour {
     }
 
     //Fisher-Yates Shuffle algorithm
-    static void Shuffle(int [] array, int n)
+    public static void Shuffle(int [] array, int n)
     {
         for (int i = 0; i < n; i++)
         { 
@@ -97,6 +108,8 @@ public class ManagerGame : MonoBehaviour {
 
         if (numberOfMatches == 0)
         {
+            endTime = Time.time - startTime;
+            Debug.Log(endTime);
             Debug.Log("You WIN!!");
             SceneManager.LoadScene("Menu");
         }
