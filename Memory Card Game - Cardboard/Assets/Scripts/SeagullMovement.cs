@@ -18,23 +18,19 @@ public class SeagullMovement : MonoBehaviour {
     private int[] order;
     private static int rangeMax;
 
-    private int [] generateOrderArray()
-    {
-        int numObjects = SeagullPoints.points.Length;
-        rangeMax = numObjects;
-        order = new int[numObjects];
-        for (int i = 0; i < numObjects; i++)
-        {
-            order[i] = i;
-        }
-        return order;
-    }
+    public AudioClip seagullCall;
+    private AudioSource source;
+
+    float startTime;
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         order = generateOrderArray();
         //ManagerGame.Shuffle(order, SeagullPoints.points.Length);
         target = SeagullPoints.points[0];
+        source.PlayOneShot(seagullCall);
+        startTime = Time.time;
     }
 
     private void Update()
@@ -46,9 +42,24 @@ public class SeagullMovement : MonoBehaviour {
         {
             NextPoint();
         }
-
+        if(Time.time - startTime > 8)
+        {
+            startTime = Time.time;
+            source.PlayOneShot(seagullCall);
+        }
     }
 
+    private int[] generateOrderArray()
+    {
+        int numObjects = SeagullPoints.points.Length;
+        rangeMax = numObjects;
+        order = new int[numObjects];
+        for (int i = 0; i < numObjects; i++)
+        {
+            order[i] = i;
+        }
+        return order;
+    }
     void NextPoint()
     {
         pointIndex++;

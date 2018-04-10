@@ -24,7 +24,7 @@ public class ManagerGame : MonoBehaviour {
 
     private bool firstClick = false;
 
-    float startTime, endTime;
+    public static float startTime, endTime;
     
     // Use this for initialization
     void Start () {
@@ -110,8 +110,7 @@ public class ManagerGame : MonoBehaviour {
         {
             endTime = Time.time - startTime;
             Debug.Log(endTime);
-            Debug.Log("You WIN!!");
-            SceneManager.LoadScene("Menu");
+            StartCoroutine("WinMenu");
         }
 
     }
@@ -171,4 +170,9 @@ public class ManagerGame : MonoBehaviour {
         canFlip = true;
     }
 
+    IEnumerator WinMenu()
+    {
+        yield return new WaitForSeconds(3);
+            SceneManager.LoadScene("Win Menu");
+    }
 }
