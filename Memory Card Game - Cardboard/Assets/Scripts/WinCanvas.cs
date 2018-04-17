@@ -21,7 +21,13 @@ public class WinCanvas : MonoBehaviour {
     {
         float finishTime = ManagerGame.endTime;
         if (finishTime > 60)
-            finishTime /= 60;
-        winText.text = "YOU WIN IN: "+ finishTime.ToString()+"s!";
+        {
+            finishTime /= 60; 
+            winText.text = "YOU WIN IN: " + finishTime.ToString("f2") + " min!"; //2 decimal places
+        }
+        else
+        {
+            winText.text = "YOU WIN IN: " + finishTime.ToString("f2") + " s!";
+        }
     }
 }

@@ -42,7 +42,7 @@ public class SeagullMovement : MonoBehaviour {
         {
             NextPoint();
         }
-        if(Time.time - startTime > 8)
+        if(Time.time - startTime > 12)
         {
             startTime = Time.time;
             source.PlayOneShot(seagullCall);
